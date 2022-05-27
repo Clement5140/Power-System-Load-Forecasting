@@ -43,6 +43,21 @@ def load_data(dir=None):
         MIN = np.min(v)
         v = (v - MIN) / (MAX - MIN)
 
+    # import matplotlib.pyplot as plt
+    # from matplotlib.pyplot import MultipleLocator
+    # plt.cla()
+    # plt.clf()
+    # plt.rcParams['font.sans-serif'] = ['SimHei']
+    # plt.rcParams['axes.unicode_minus'] = False
+    # plt.xlabel('日期时间')
+    # plt.ylabel('总有功功率/kw')
+    # plt.plot(time, v)
+    # x_major_locator = MultipleLocator(100000)
+    # ax = plt.gca()
+    # ax.xaxis.set_major_locator(x_major_locator)
+    # plt.xticks(rotation=30)
+    # plt.show()
+
     for i in tqdm(range(len(v)-96)):
         train_seq = []
         train_label = []
