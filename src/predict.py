@@ -1,13 +1,10 @@
 import csv
 import torch
 import config
-import numpy as np
-from tqdm import tqdm
 from model import LSTM
 import matplotlib.pyplot as plt
 from matplotlib.pyplot import MultipleLocator
-from torch.utils.data import DataLoader
-from datetime import date, time, datetime, timedelta
+from datetime import datetime, timedelta
 from dataset import load_data
 
 MAX = 0
