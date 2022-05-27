@@ -16,7 +16,7 @@ torch.cuda.set_device(0)
 
 # dataset
 dataset_dir = 'dataset/附件1-区域15分钟负荷数据.csv'
-data = load_data(dataset_dir)
+data, _, _ = load_data(dataset_dir)
 
 train_data = data[0: int(len(data) * config.TRANING_DATASET_RATIO)]
 dev_data = data[int(len(data) * config.TRANING_DATASET_RATIO): len(data)]

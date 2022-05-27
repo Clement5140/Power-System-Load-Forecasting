@@ -4,3 +4,6 @@ train:
 
 test:
 	@python src/evaluate.py
+
+pred:
+	@python src/predict.py

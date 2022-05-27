@@ -20,6 +20,8 @@ def load_data(dir=None):
     data = []
     time = []
     v = []
+    MAX = 0
+    MIN = 0
 
     print('loading data...')
     with open(dir, encoding='utf-8') as f:
@@ -51,4 +53,4 @@ def load_data(dir=None):
         train_label = torch.DoubleTensor(train_label).view(-1)
         data.append((time[i], train_seq, train_label))
 
-    return data
+    return data, MAX, MIN
