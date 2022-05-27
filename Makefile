@@ -2,7 +2,7 @@
 train:
 	@python src/train.py
 
-test:
+eval:
 	@python src/evaluate.py
 
 pred:

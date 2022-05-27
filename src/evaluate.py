@@ -38,6 +38,8 @@ def eval_(dataloader, model, model_name):
 
     print('evaluating...')
     MSE = 0
+    MAE = 0
+    MAPE = 0
     T = []
     Y = []
     PRED_Y = []
@@ -49,10 +51,15 @@ def eval_(dataloader, model, model_name):
         pred_y = model(x)
         for i in range(len(y)):
             MSE = MSE + (y.data[i] - pred_y.data[i]) * (y.data[i] - pred_y.data[i])
+            MAE = MAE + abs(y.data[i] - pred_y.data[i])
+            if y.data[i] != 0:
+                MAPE = MAPE + abs(y.data[i] - pred_y.data[i]) / y.data[i]
             T.append(t[i])
             Y.append(y.data[i].item() * (MAX - MIN) + MIN)
             PRED_Y.append(pred_y.data[i].item() * (MAX - MIN) + MIN)
     MSE = MSE / len(dataloader.dataset)
+    MAE = MAE / len(dataloader.dataset)
+    MAPE = MAPE / len(dataloader.dataset)
 
     plt.cla()
     plt.clf()
@@ -67,7 +74,7 @@ def eval_(dataloader, model, model_name):
     ax.xaxis.set_major_locator(x_major_locator)
     plt.xticks(rotation=30)
     plt.show()
-    return MSE
+    return MSE, MAE, MAPE
 
 
 if __name__ == '__main__':
@@ -91,5 +98,7 @@ if __name__ == '__main__':
     lstm = LSTM(input_size=config.INPUT_SIZE, hidden_size=config.HIDDEN_SIZE, num_layers=config.NUM_LAYERS, output_size=config.OUTPUT_SIZE, dropout=config.DROPOUT).cuda()
     lstm.load_state_dict(torch.load('snap_shot/lstm_best_steps_26000.pt'))
 
-    mse = eval_(dev_dataloader, lstm, 'lstm')
-    print(mse.item())
+    mse, mae, mape = eval_(dev_dataloader, lstm, 'lstm')
+    print('mse: ' + str(mse.item()*(MAX-MIN)*(MAX-MIN)))
+    print('mae: ' + str(mae.item()*(MAX-MIN)))
+    print('mape: ' + str(mape.item()))
