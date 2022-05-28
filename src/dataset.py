@@ -66,7 +66,7 @@ def load_data(dir=None):
         train_label.append(v[i + 96])
         train_seq = torch.DoubleTensor(train_seq)
         train_label = torch.DoubleTensor(train_label).view(-1)
-        data.append((time[i], train_seq, train_label))
+        data.append((time[i+96], train_seq, train_label))
 
     return data, MAX, MIN
 
@@ -136,6 +136,6 @@ def load_data2(dir=None):
             train_label.append([v1[t][i+30], v2[t][i+30]])
             train_seq = torch.DoubleTensor(train_seq)
             train_label = torch.DoubleTensor(train_label).view(-1)
-            data[t].append((time[t][i], train_seq, train_label))
+            data[t].append((time[t][i+30], train_seq, train_label))
 
     return data, MAX, MIN
