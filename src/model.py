@@ -14,8 +14,8 @@ class LSTM(nn.Module):
         self.fc2 = nn.Linear(hidden_size, output_size, dtype=torch.double)
 
     def forward(self, x):
-        h_0 = torch.zeros(self.num_directions * self.num_layers, x.size(0), self.hidden_size, dtype=torch.double).cuda()
-        c_0 = torch.zeros(self.num_directions * self.num_layers, x.size(0), self.hidden_size, dtype=torch.double).cuda()
+        h_0 = torch.randn(self.num_directions * self.num_layers, x.size(0), self.hidden_size, dtype=torch.double).cuda()
+        c_0 = torch.randn(self.num_directions * self.num_layers, x.size(0), self.hidden_size, dtype=torch.double).cuda()
         x, _ = self.lstm(x, (h_0, c_0))
         x = F.relu(self.fc1(x[:, -1, :]))
         x = self.fc2(x)
