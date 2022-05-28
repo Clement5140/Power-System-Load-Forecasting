@@ -13,3 +13,6 @@ eval2:
 
 pred:
 	@python src/predict.py
+
+pred2:
+	@python src/predict2.py
