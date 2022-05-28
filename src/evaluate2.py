@@ -37,6 +37,8 @@ def eval_(dataloader, model, model_name):
     T = []
     Y1 = []
     PRED_Y1 = []
+    Y2 = []
+    PRED_Y2 = []
     for data in tqdm(dataloader):
         t, x, y = data
         x = x.cuda()
@@ -51,6 +53,8 @@ def eval_(dataloader, model, model_name):
             T.append(t[i])
             Y1.append(y.data[i][0].item() * (MAX - MIN) + MIN)
             PRED_Y1.append(pred_y.data[i][0].item() * (MAX - MIN) + MIN)
+            Y2.append(y.data[i][1].item() * (MAX - MIN) + MIN)
+            PRED_Y2.append(pred_y.data[i][1].item() * (MAX - MIN) + MIN)
     MSE = MSE / len(dataloader.dataset)
     MAE = MAE / len(dataloader.dataset)
     MAPE = MAPE / len(dataloader.dataset)
@@ -60,7 +64,7 @@ def eval_(dataloader, model, model_name):
     plt.rcParams['font.sans-serif'] = ['SimHei']
     plt.rcParams['axes.unicode_minus'] = False
     plt.xlabel('日期时间')
-    plt.ylabel('总有功功率/kw')
+    plt.ylabel('有功功率最大值/kw')
     plt.plot(T, Y1, label='真实值')
     plt.plot(T, PRED_Y1, label='预测值')
     x_major_locator = MultipleLocator(10)
@@ -68,9 +72,23 @@ def eval_(dataloader, model, model_name):
     ax.xaxis.set_major_locator(x_major_locator)
     plt.xticks(rotation=30)
     plt.show()
+    
+    plt.cla()
+    plt.clf()
+    plt.rcParams['font.sans-serif'] = ['SimHei']
+    plt.rcParams['axes.unicode_minus'] = False
+    plt.xlabel('日期时间')
+    plt.ylabel('有功功率最小值/kw')
+    plt.plot(T, Y2, label='真实值')
+    plt.plot(T, PRED_Y2, label='预测值')
+    x_major_locator = MultipleLocator(10)
+    ax = plt.gca()
+    ax.xaxis.set_major_locator(x_major_locator)
+    plt.xticks(rotation=30)
+    plt.show()
     return MSE, MAE, MAPE
 
-dirs = ['snap_shot/lstm_2_1_best_steps_5000.pt', 'snap_shot/lstm_2_2_best_steps_3800.pt']
+dirs = ['snap_shot/lstm_2_1_best_steps_5000.pt', 'snap_shot/lstm_2_2_best_steps_3800.pt', 'snap_shot/lstm_2_3_best_steps_4000.pt', 'snap_shot/lstm_2_4_best_steps_3800.pt']
 
 if __name__ == '__main__':
     # device
